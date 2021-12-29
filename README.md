@@ -41,6 +41,8 @@ Link for app preview
 [https://www.figma.com/proto/npaI38s7Wu8rlA6Z2zPyXD/Starpoint-System?node-id=7%3A214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=7%3A214](https://www.figma.com/proto/npaI38s7Wu8rlA6Z2zPyXD/Starpoint-System?node-id=7%3A214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=7%3A214)
 
 ## Sequence Diagram
+<img src="Sequence_diagram.jpeg" width="300" >
+
 
 
 
