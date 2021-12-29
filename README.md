@@ -10,12 +10,13 @@
 | Muhammad Syahmi Aiman bin Mohd Shahrin | 1811893 | 
 
 ##  Title of the project. 
-Starpoint System Application
+Star Point System Application
 
 ##  Introduction
-Star Point System App is an application that records star points by utilizing QR codes. The app will be benefited by both IIUM students and event organizers. 
-The student only needs to scan the QR code provided by the event organizer, and star points will be awarded to their account. By using this app, the organizer 
-will not need to make a spreadsheet that stores students’ details, causing a long queue at the entrance of the venue, which is a common occurrence in any event.
+Star Point System App is an application that records star points by utilizing QR codes. The app will be benefited by both IIUM students and event organizers.
+The student only needs to scan the QR code provided by the event organizer, and star points will be awarded to their account.
+By using this app, the organizers don't need to create their own spreadsheet to store students’ details, which can cause a long queue at the venue, a common occurrence in any event.
+Hence, this app can benefit both the students and event organizers by saving time and allowing for smooth progress for the events.
 
 ##  Objective
 - To ease students in finding events to participate in and earn star points.
@@ -33,6 +34,7 @@ will not need to make a spreadsheet that stores students’ details, causing a l
 - Keep track of past programs that the users have joined
 
 ## Screen Navigation and Components
+The links provided will display the screen navigation process and components of the application.
 
 Link for diagram
 
@@ -43,6 +45,8 @@ Link for app preview
 [https://www.figma.com/proto/npaI38s7Wu8rlA6Z2zPyXD/Starpoint-System?node-id=7%3A214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=7%3A214](https://www.figma.com/proto/npaI38s7Wu8rlA6Z2zPyXD/Starpoint-System?node-id=7%3A214&scaling=scale-down&page-id=0%3A1&starting-point-node-id=7%3A214)
 
 ## Sequence Diagram
+The sequence diagram shows the expected flow of the application for the users.
+
 <img src="Sequence_diagram.jpeg" width="1000" >
 
 
