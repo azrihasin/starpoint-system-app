@@ -34,6 +34,8 @@ will not need to make a spreadsheet that stores students’ details, causing a l
 
 ## Screen Navigation and Components
 
+Link for diagram
+
 [https://www.figma.com/file/npaI38s7Wu8rlA6Z2zPyXD/Starpoint-System?node-id=0%3A1](https://www.figma.com/file/npaI38s7Wu8rlA6Z2zPyXD/Starpoint-System?node-id=0%3A1)
 
 Link for app preview
