@@ -13,7 +13,7 @@ export default function Add({navigation}) {
     ;(async () => {
       const { status } = await Camera.requestCameraPermissionsAsync()
       setHasPermission(status === 'granted')
-    })()
+    })
   }, [])
 
   const takePicture = async () => {
