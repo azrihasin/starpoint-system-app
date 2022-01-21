@@ -25,7 +25,7 @@ export default class Signup extends Component {
 
   registerUser = () => {
     if(this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signup!')
+      Alert.alert('Enter details to sign up!')
     } else {
       this.setState({
         isLoading: true,
@@ -93,7 +93,7 @@ export default class Signup extends Component {
         />   
         <Button
           color="#3740FE"
-          title="Signup"
+          title="Sign up"
           onPress={() => this.registerUser()}
         />
 
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     padding: 35,
-    backgroundColor: '#fff'
+    backgroundColor: '#dddddd'
   },
   inputStyle: {
     width: '100%',
@@ -137,6 +137,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#dddddd'
   }
 });

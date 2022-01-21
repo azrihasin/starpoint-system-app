@@ -13,13 +13,14 @@ import thunk from 'redux-thunk'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import Firebase from './database/firebase'
+import Welcome from './components/Welcome'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import MainScreen from './components/Organization'
 import AddScreen from './components/organization/Add'
 import SaveScreen from './components/organization/Save'
 
-import { Text, LogBox } from 'react-native'
+import { Text, View, LogBox } from 'react-native'
 
 const Stack = createStackNavigator()
 
@@ -52,6 +53,7 @@ export class App extends Component {
       }
     })
   }
+  
   render() {
     const { loggedIn, loaded } = this.state
     if (!loaded) {
@@ -64,10 +66,26 @@ export class App extends Component {
     if (!loggedIn) {
       return (
         <NavigationContainer>
-          <Tab.Navigator style={{marginTop:50}}>
-            <Tab.Screen name="Student" component={StudentScreen} />
-            <Tab.Screen name="Organization" component={OrganizationScreen} />
-          </Tab.Navigator>
+          <Stack.Navigator initialRouteName="Welcome">
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+              navigation={this.props.navigation}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Student"
+              component={Student}
+              navigation={this.props.navigation}
+              //options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Organization"
+              component={Organization}
+              navigation={this.props.navigation}
+              //options={{ headerShown: false }}
+            />
+          </Stack.Navigator>  
         </NavigationContainer>
       )
     }
@@ -103,7 +121,7 @@ export class App extends Component {
 
 export default App
 
-const StudentScreen = (props) => {
+const Student = (props) => {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
@@ -122,7 +140,7 @@ const StudentScreen = (props) => {
   )
 }
 
-const OrganizationScreen = (props) => {
+const Organization = (props) => {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
