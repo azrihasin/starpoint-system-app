@@ -9,6 +9,7 @@ import CameraScreen from './organization/Camera'
 import FeedScreen from './organization/Feed'
 import ProfileScreen from './organization/Profile'
 import SearchScreen from './organization/Search'
+import QRScanner from './QRScanner'
 
 import { fetchUser, fetchUserPosts } from '../redux/actions/index'
 
@@ -84,6 +85,27 @@ export class Main extends Component {
             })}
             options={{
               tabBarLabel: 'Add',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons
+                  name="plus-box"
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            key={Date.now()}
+            name="ScanQR"
+            component={QRScanner}
+            listeners={({ navigation }) => ({
+              tabPress: (event) => {
+                event.preventDefault()
+                navigation.navigate('ScanQR')
+              },
+            })}
+            options={{
+              tabBarLabel: 'Scan',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
                   name="plus-box"

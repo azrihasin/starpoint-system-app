@@ -18,6 +18,7 @@ import Signup from './components/auth/Signup'
 import MainScreen from './components/Organization'
 import AddScreen from './components/organization/Add'
 import SaveScreen from './components/organization/Save'
+import QRScanner from './components/QRScanner'
 
 import { Text, LogBox } from 'react-native'
 
@@ -67,6 +68,7 @@ export class App extends Component {
           <Tab.Navigator style={{marginTop:50}}>
             <Tab.Screen name="Student" component={StudentScreen} />
             <Tab.Screen name="Organization" component={OrganizationScreen} />
+            <Tab.Screen name="Organid" component={QRScanner} />
           </Tab.Navigator>
         </NavigationContainer>
       )
