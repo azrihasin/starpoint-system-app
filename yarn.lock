@@ -2716,7 +2716,7 @@
   "resolved" "https://registry.npmjs.org/colorette/-/colorette-1.4.0.tgz"
   "version" "1.4.0"
 
-"colors@^1.1.2":
+"colors@^1.1.2", "colors@^1.4.0":
   "integrity" "sha512-5QhJWPFZqkKIieXJPpCprdOytvH7v0AGWpu9K2jZ4LWkGg3dVBNoYPgGGRpEsc0jb8Boy0ElYrdjH9uXfhRSqw=="
   "resolved" "https://registry.npmjs.org/colors/-/colors-1.4.2.tgz"
   "version" "1.4.2"

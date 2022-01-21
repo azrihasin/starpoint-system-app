@@ -10,7 +10,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
 
 import Firebase from './database/firebase'
 import Login from './components/auth/Login'
@@ -22,8 +22,6 @@ import SaveScreen from './components/organization/Save'
 import { Text, LogBox } from 'react-native'
 
 const Stack = createStackNavigator()
-
-const Tab = createMaterialTopTabNavigator()
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -64,10 +62,20 @@ export class App extends Component {
     if (!loggedIn) {
       return (
         <NavigationContainer>
-          <Tab.Navigator style={{marginTop:50}}>
-            <Tab.Screen name="Student" component={StudentScreen} />
-            <Tab.Screen name="Organization" component={OrganizationScreen} />
-          </Tab.Navigator>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
+              navigation={this.props.navigation}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              navigation={this.props.navigation}
+              component={Login}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
         </NavigationContainer>
       )
     }
@@ -102,41 +110,3 @@ export class App extends Component {
 }
 
 export default App
-
-const StudentScreen = (props) => {
-  return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
-        name="Signup"
-        component={Signup}
-        navigation={props.navigation}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Login"
-        navigation={props.navigation}
-        component={Login}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-const OrganizationScreen = (props) => {
-  return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
-        name="Signup"
-        component={Signup}
-        navigation={props.navigation}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Login"
-        navigation={props.navigation}
-        component={Login}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  )
-}

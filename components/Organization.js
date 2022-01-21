@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
+import Firebase from '../database/firebase'
 import CameraScreen from './organization/Camera'
 import FeedScreen from './organization/Feed'
 import ProfileScreen from './organization/Profile'
@@ -59,6 +59,7 @@ export class Main extends Component {
             key={Date.now()}
             name="Search"
             component={SearchScreen}
+            navigation = {this.props.navigation}
             options={{
               tabBarLabel: 'Seach',
               tabBarIcon: ({ color, size }) => (
@@ -66,6 +67,22 @@ export class Main extends Component {
                   name="magnify"
                   color={color}
                   size={26}
+                />
+              ),
+            }}
+          />
+
+          <Tab.Screen
+            key={Date.now()}
+            name="Scan"
+            component={EmptyScreen}
+            options={{
+              tabBarLabel: 'Scan',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons
+                  name="qrcode-scan"
+                  color={color}
+                  size={23}
                 />
               ),
             }}
@@ -97,6 +114,12 @@ export class Main extends Component {
           <Tab.Screen
             name="Profile"
             component={ProfileScreen}
+            listeners={({ navigation }) => ({
+              tabPress: (event) => {
+                event.preventDefault()
+                navigation.navigate('Profile',{uid: Firebase.auth().currentUser.uid})
+              },
+            })}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons

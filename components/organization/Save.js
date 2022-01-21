@@ -37,14 +37,25 @@ export default function Save(props) {
     }
 
     const savePostData = (downloadURL) => {
+        // Firebase.firestore()
+        // .collection('posts')
+        // .doc(Firebase.auth().currentUser.uid)
+        // .collection("userPosts")
+        // .add({
+        //     downloadURL,
+        //     caption,
+        //     creation: serverTimestamp()
+        // }).then((function(){
+        //     props.navigation.popToTop()
+        // }))
+
         Firebase.firestore()
-        .collection('posts')
-        .doc(Firebase.auth().currentUser.uid)
-        .collection("userPosts")
+        .collection('feed')
         .add({
             downloadURL,
             caption,
-            creation: serverTimestamp()
+            creation: serverTimestamp(),
+            uid:Firebase.auth().currentUser.uid 
         }).then((function(){
             props.navigation.popToTop()
         }))
