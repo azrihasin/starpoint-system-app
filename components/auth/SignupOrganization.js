@@ -20,7 +20,7 @@ export default class Signup extends Component {
       displayName: '',
       email: '',
       password: '',
-      role: 'student',
+      role: 'organization',
       isLoading: false,
     }
   }
@@ -31,16 +31,12 @@ export default class Signup extends Component {
     this.setState(state)
   }
 
-  updateChecked = (val, prop) => {
-    const state = this.state
-    state[prop] = val
-    this.setState(state)
-  }
-
   registerUser = () => {
+    console.log('RUN THORUGH HERE')
     if(this.state.email === '' && this.state.password === '') {
       Alert.alert('Enter details to sign up!')
     } else {
+      console.log('RUN THORUGH HERE')
       this.setState({
         isLoading: true,
       })
@@ -56,19 +52,21 @@ export default class Signup extends Component {
               role: this.state.role
             })
 
+          console.log('success')
+
           res.user.updateProfile({
             displayName: this.state.displayName,
           })
 
           console.log('User registered successfully!' + res)
-          // this.setState({
-          //   isLoading: false,
-          //   displayName: '',
-          //   email: '',
-          //   password: '',
-          //   role: ''
-          // })
-          // this.props.navigation.navigate('Login')
+          this.setState({
+            isLoading: false,
+            displayName: '',
+            email: '',
+            password: '',
+            role: ''
+          })
+          // this.props.navigation.navigate('LoginOrganization')
         })
         .catch((error) => this.setState({ errorMessage: error.message }))
     }
@@ -104,24 +102,7 @@ export default class Signup extends Component {
           maxLength={15}
           secureTextEntry={true}
         />
-        <View style={styles.buttonContainer}>
-          <RadioButton
-            value="student"
-            status={this.state.role === 'student' ? 'checked' : 'unchecked'}
-            onPress={() => this.updateChecked('student', 'role')}
-          />
-          <Text>Student</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <RadioButton
-            value="organization"
-            status={
-              this.state.role === 'organization' ? 'checked' : 'unchecked'
-            }
-            onPress={() => this.updateChecked('organization', 'role')}
-          />
-          <Text>Organization</Text>
-        </View>
+        
 
         <Button
           color="#3740FE"
@@ -131,7 +112,7 @@ export default class Signup extends Component {
 
         <Text
           style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Login')}
+          onPress={() => this.props.navigation.navigate('LoginOrganization')}
         >
           Already Registered? Click here to login
         </Text>

@@ -44,7 +44,7 @@ export default class ImageBrowserScreen extends Component {
   _renderDoneButton = (count, onSubmit) => {
     if (!count) return null;
     return <TouchableOpacity title={'Done'} onPress={onSubmit}>
-      <Text onPress={onSubmit}>Done</Text>
+      <Text style={{marginRight:20,fontWeight:'bold'}} onPress={onSubmit}>Done</Text>
     </TouchableOpacity>
   }
 
