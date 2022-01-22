@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -8,11 +8,21 @@ import ProfileScreen from './organization/Profile'
 import SearchScreen from './organization/Search'
 import QRScanner from './QRScanner'
 import EventsPage from './EventsPage'
+import HistoryPage from './HistoryPage';
+import User from '../User'
 
 const Tab = createMaterialBottomTabNavigator()
 
 export default MainScreen = () => {
-    const role = 'organization';
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(()=>{
+        User.fetchDetails().then((_) => {
+            setIsLoading(false);
+        });
+    }, []);
+
+    if (isLoading) return <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }} ><Text>Loading...</Text></View>;
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -53,34 +63,38 @@ export default MainScreen = () => {
                         ),
                     }}
                 />
-                {role === 'organization' && <Tab.Screen
+                {User.role === 'organization' && <Tab.Screen
                     key={Date.now()}
                     name="Events"
                     component={EventsPage}
-                    // listeners={({ navigation }) => ({
-                    //     tabPress: (event) => {
-                    //         event.preventDefault()
-                    //         navigation.navigate('Add')
-                    //     },
-                    // })}
                     options={{
-                        tabBarLabel: 'Add',
+                        tabBarLabel: 'Event',
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons
-                                name="plus-box"
+                                name="view-list"
                                 color={color}
                                 size={26}
                             />
                         ),
                     }}
                 />}
-                {role === 'student' && <Tab.Screen
+                {User.role === 'student' && <Tab.Screen
                     key={Date.now()}
                     name="Scan"
                     component={QRScanner}
                     options={{
                         tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name="home" color={color} size={26} />
+                            <MaterialCommunityIcons name="qrcode" color={color} size={26} />
+                        ),
+                    }}
+                />}
+                {User.role === 'student' && <Tab.Screen
+                    key={Date.now()}
+                    name="History"
+                    component={HistoryPage}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="history" color={color} size={26} />
                         ),
                     }}
                 />}

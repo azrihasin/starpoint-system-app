@@ -1,10 +1,11 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, FlatList } from 'react-native'
-import { getAuth } from "firebase/auth";
 
-export default Profile = ({ navigation }) => {
-  const currentUser = getAuth().currentUser;
+import { connect } from 'react-redux'
 
+function Profile(props) {
+  const { currentUser, posts } = props
+  console.log({ currentUser, posts })
   return (
     <View style={styles.container}>
       <View style={styles.containerInfo}>
@@ -12,7 +13,7 @@ export default Profile = ({ navigation }) => {
         <Text>{currentUser.email}</Text>
       </View>
 
-      {/* <View style={styles.containerGallery}>
+      <View style={styles.containerGallery}>
         <FlatList
           horizontal={false}
           data={posts}
@@ -22,7 +23,7 @@ export default Profile = ({ navigation }) => {
             </View>
           )}
         />
-      </View> */}
+      </View>
     </View>
   )
 }
@@ -38,11 +39,18 @@ const styles = StyleSheet.create({
   containerGallery: {
     flex: 1,
   },
-  containerImage: {
-    flex: 1 / 3
+  containerImage:{
+    flex:1/3
   },
   image: {
     flex: 1,
     aspectRatio: 1 / 1,
   },
 })
+
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+  posts: store.userState.posts,
+})
+
+export default connect(mapStateToProps, null)(Profile)

@@ -18,6 +18,7 @@ import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import MainScreen from './components/MainScreen'
 import EventDetailsPage from './components/EventDetailsPage'
+import CreateEventPage from './components/CreateEventPage'
 
 import { Text, View, LogBox } from 'react-native'
 
@@ -104,6 +105,12 @@ export class App extends Component {
             <Stack.Screen
               name="EventDetails"
               component={EventDetailsPage}
+              navigation={this.props.navigation}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="CreateEvent"
+              component={CreateEventPage}
               navigation={this.props.navigation}
               options={{ headerShown: false }}
             />

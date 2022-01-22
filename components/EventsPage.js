@@ -1,18 +1,22 @@
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import QRCode from "react-native-qrcode-svg";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export default EventsPage = () => {
+export default EventsPage = ({ navigation }) => {
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const Item = (item) => {
-        return <View>
-            <QRCode value={item.item.id} />
-            <Text style={{color: 'black'}} >{item.item.title}</Text>
-        </View>
+        return <Pressable
+            onPress={() => navigation.navigate("EventDetails", { eventId: item.item.id })}
+            style={styles.item}
+        >
+            <QRCode size={48} value={item.item.id} />
+            <Text style={styles.itemTitle} >{item.item.title}</Text>
+        </Pressable>
     };
 
     useEffect(async () => {
@@ -25,9 +29,19 @@ export default EventsPage = () => {
         console.log(events);
     }, []);
 
-    if (isLoading) return <View style={{ flex: 1 }} ><Text>Loading...</Text></View>
+    if (isLoading) return <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }} ><Text>Loading...</Text></View>;
 
-    return <View style={{height: 200}} >
+    return <View style={styles.body} >
+        <View style={styles.appBar} >
+            <Text style={styles.title} >Events</Text>
+            <Pressable onPress={() => navigation.navigate("CreateEvent")} style={styles.iconButton} >
+                <MaterialCommunityIcons
+                    name="plus"
+                    size={26}
+                    color="white"
+                />
+            </Pressable>
+        </View>
         <FlatList
             data={events}
             renderItem={Item}
@@ -35,3 +49,36 @@ export default EventsPage = () => {
         />
     </View>;
 };
+
+const styles = StyleSheet.create({
+    body: {
+        marginTop: 36
+    },
+    appBar: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingHorizontal: 16
+    },
+    iconButton: {
+        backgroundColor: 'blue',
+        borderRadius: 6,
+        padding: 4
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "600",
+    },
+    item: {
+        marginHorizontal: 16,
+        flexDirection: 'row',
+        paddingVertical: 12,
+        alignItems: 'center',
+        borderBottomWidth: 0.5,
+    },
+    itemTitle: {
+        color: 'black',
+        fontSize: 18,
+        fontWeight: "600",
+        paddingLeft: 12
+    }
+});
