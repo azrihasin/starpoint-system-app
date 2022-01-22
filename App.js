@@ -16,10 +16,8 @@ import Firebase from './database/firebase'
 import Welcome from './components/Welcome'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
-import MainScreen from './components/Organization'
-import AddScreen from './components/organization/Add'
-import SaveScreen from './components/organization/Save'
-import QRScanner from './components/QRScanner'
+import MainScreen from './components/MainScreen'
+import EventDetailsPage from './components/EventDetailsPage'
 
 import { Text, View, LogBox } from 'react-native'
 
@@ -41,6 +39,8 @@ export class App extends Component {
 
   componentDidMount() {
     Firebase.auth().onAuthStateChanged((user) => {
+      console.log("nvjefdnvjfnjvnfsvnjefvjfbvf");
+      console.log(user);
       if (!user) {
         this.setState({
           loggedIn: false,
@@ -102,16 +102,10 @@ export class App extends Component {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Add"
-              component={AddScreen}
+              name="EventDetails"
+              component={EventDetailsPage}
               navigation={this.props.navigation}
-              // options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Save"
-              component={SaveScreen}
-              navigation={this.props.navigation}
-              // options={{ headerShown: false }}
+              options={{ headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>

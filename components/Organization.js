@@ -58,6 +58,16 @@ export class Main extends Component {
           />
           <Tab.Screen
             key={Date.now()}
+            name="Scan"
+            component={QRScanner}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="home" color={color} size={26} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            key={Date.now()}
             name="Search"
             component={SearchScreen}
             options={{
@@ -85,27 +95,6 @@ export class Main extends Component {
             })}
             options={{
               tabBarLabel: 'Add',
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons
-                  name="plus-box"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            key={Date.now()}
-            name="ScanQR"
-            component={QRScanner}
-            listeners={({ navigation }) => ({
-              tabPress: (event) => {
-                event.preventDefault()
-                navigation.navigate('ScanQR')
-              },
-            })}
-            options={{
-              tabBarLabel: 'Scan',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
                   name="plus-box"

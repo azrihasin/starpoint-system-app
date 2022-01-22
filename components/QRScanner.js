@@ -13,9 +13,9 @@ export default function QRScanner() {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleQRCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    alert(`QR code with type ${type} and data ${data} has been scanned!`);
   };
 
   if (hasPermission === null) {
@@ -26,9 +26,9 @@ export default function QRScanner() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1, marginTop: 24}} >
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={scanned ? undefined : handleQRCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}

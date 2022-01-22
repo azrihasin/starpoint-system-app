@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 
-export default function Add({navigation}) {
+export default function Add({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null)
   const [camera, setCamera] = useState(null)
   const [image, setImage] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync()
       setHasPermission(status === 'granted')
-    })
+    })()
   }, [])
 
   const takePicture = async () => {
@@ -83,7 +83,7 @@ export default function Add({navigation}) {
       <Button
         title="Save"
         onPress={() => {
-          navigation.navigate("Save",{image})
+          navigation.navigate("Save", { image })
         }}
       ></Button>
       {image && <Image source={{ uri: image }} style={{ flex: 1 }} />}
