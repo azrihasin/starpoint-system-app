@@ -22,8 +22,6 @@ import SignupStudent from './components/auth/SignupStudent'
 import Main from './components/Main'
 import AddScreen from './components/organization/Add'
 import ProfileScreen from './components/organization/Profile'
-// import CameraScreen from './components/organization/Camera'
-// import SaveScreen from './components/organization/Save'
 import UploadScreen from './components/organization/Upload'
 import EventDetailsPage from './components/EventDetailsPage'
 import CreateEventPage from './components/CreateEventPage'
@@ -34,8 +32,7 @@ const Stack = createStackNavigator()
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
-LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core'])
+LogBox.ignoreAllLogs()
 
 export class App extends Component {
   constructor(props) {
@@ -47,8 +44,7 @@ export class App extends Component {
 
   componentDidMount() {
     Firebase.auth().onAuthStateChanged((user) => {
-      console.log("Go through here");
-      console.log(user);
+    
       if (!user) {
         this.setState({
           loggedIn: false,

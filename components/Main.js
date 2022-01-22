@@ -17,6 +17,7 @@ import {
   fetchUser,
   fetchUserPosts,
   fetchUserFollowing,
+  clearData
 } from '../redux/actions/index'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -35,12 +36,13 @@ export class Main extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchUser()
-    this.props.fetchUserPosts()
-    this.props.fetchUserFollowing()
+    this.props.clearData();
+    this.props.fetchUser();
+    this.props.fetchUserPosts();
+    this.props.fetchUserFollowing();
 
     User.fetchDetails().then((_) => {
-      // setIsLoading(false);
+    
       this.setState({
         loaded: true,
         role: User.role,
@@ -210,7 +212,7 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchProps = (dispatch) =>
   bindActionCreators(
-    { fetchUser, fetchUserPosts, fetchUserFollowing },
+    { fetchUser, fetchUserPosts, fetchUserFollowing, clearData },
     dispatch,
   )
 

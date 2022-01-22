@@ -48,9 +48,9 @@ function Profile(props) {
         })
     }
 
-    if(props.following.indexOf(props.route.params.uid)> -1){
+    if (props.following.indexOf(props.route.params.uid) > -1) {
       setFollowing(true)
-    }else{
+    } else {
       setFollowing(false)
     }
   }, [props.route.params.uid, props.following])
@@ -58,31 +58,34 @@ function Profile(props) {
   const convertDate = (date) => {
     // whatever formatting you want to do can be done here
     var d = date.toString()
-    return d.substr(0, 21);
-}
+    return d.substr(0, 21)
+  }
 
-const onFollow =()=>{
-  Firebase.firestore()
-  .collection("following")
-  .doc(Firebase.auth().currentUser.uid)
-  .collection("userFollowing")
-  .doc(props.route.params.uid)
-  .set({})
-}
+  const onFollow = () => {
+    Firebase.firestore()
+      .collection('following')
+      .doc(Firebase.auth().currentUser.uid)
+      .collection('userFollowing')
+      .doc(props.route.params.uid)
+      .set({})
+  }
 
-const onUnfollow =()=>{
-  Firebase.firestore()
-  .collection("following")
-  .doc(Firebase.auth().currentUser.uid)
-  .collection("userFollowing")
-  .doc(props.route.params.uid)
-  .delete()
-}
+  const onUnfollow = () => {
+    Firebase.firestore()
+      .collection('following')
+      .doc(Firebase.auth().currentUser.uid)
+      .collection('userFollowing')
+      .doc(props.route.params.uid)
+      .delete()
+  }
+
+  const onLogout = ()=>{
+    Firebase.auth().signOut();
+  }
 
   if (user === null) {
     return <View></View>
   }
-
 
   return (
     <View style={styles.container}>
@@ -90,19 +93,17 @@ const onUnfollow =()=>{
         <Text>{user.name}</Text>
         <Text>{user.email}</Text>
 
-        {props.route.params.uid !== Firebase.auth().currentUser.uid? (
+        {props.route.params.uid !== Firebase.auth().currentUser.uid ? (
           <View>
-            {following?(
-              <Button title="Following"
-              onPress={()=>onUnfollow()}
-              />
-            ):(
-              <Button title="Follow"
-              onPress={()=>onFollow()}
-              />
-            ) }
+            {following ? (
+              <Button title="Following" onPress={() => onUnfollow()} />
+            ) : (
+              <Button title="Follow" onPress={() => onFollow()} />
+            )}
           </View>
-        ):null}
+        ) : (
+          <Button title="Logout" onPress={() => onLogout()} />
+        )}
       </View>
 
       <View style={styles.containerGallery}>
@@ -111,16 +112,16 @@ const onUnfollow =()=>{
           data={userPosts}
           renderItem={({ item }) => (
             <View style={styles.containerImage}>
-              <View style={styles.postHeader} >
-              <Avatar
-                size={60}
-                rounded
-                title="P"
-                containerStyle={{ backgroundColor: 'coral' ,margin:10}}
-              />
-              <Text>{user.name}</Text>
-              <Text>{convertDate(item.creation.toDate())}</Text>
-              <Text>{item.content}</Text>
+              <View style={styles.postHeader}>
+                <Avatar
+                  size={60}
+                  rounded
+                  title="P"
+                  containerStyle={{ backgroundColor: 'coral', margin: 10 }}
+                />
+                <Text>{user.name}</Text>
+                <Text>{convertDate(item.creation.toDate())}</Text>
+                <Text>{item.content}</Text>
               </View>
               <Image style={styles.image} source={{ uri: item.downloadURL }} />
             </View>
@@ -149,10 +150,10 @@ const styles = StyleSheet.create({
     flex: 1,
     aspectRatio: 1 / 1,
   },
-  postHeader:{
-    margin:10,
-    flexDirection:'row'
-  }
+  postHeader: {
+    margin: 10,
+    flexDirection: 'row',
+  },
 })
 
 const mapStateToProps = (store) => ({
