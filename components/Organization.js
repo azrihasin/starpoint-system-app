@@ -10,7 +10,7 @@ import FeedScreen from './organization/Feed'
 import ProfileScreen from './organization/Profile'
 import SearchScreen from './organization/Search'
 
-import { fetchUser, fetchUserPosts } from '../redux/actions/index'
+import { fetchUser, fetchUserPosts, fetchUserFollowing } from '../redux/actions/index'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -22,6 +22,7 @@ export class Main extends Component {
   componentDidMount() {
     this.props.fetchUser()
     this.props.fetchUserPosts()
+    this.props.fetchUserFollowing()
   }
 
   render() {
@@ -141,6 +142,6 @@ const mapStateToProps = (store) => ({
 })
 
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchUser, fetchUserPosts  }, dispatch)
+  bindActionCreators({ fetchUser, fetchUserPosts, fetchUserFollowing  }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchProps)(Main)

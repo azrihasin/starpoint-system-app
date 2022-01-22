@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, Image, FlatList } from 'react-native'
+import { StyleSheet, View, Text, Image, FlatList, Button } from 'react-native'
+import { Avatar } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import Firebase from '../../database/firebase'
@@ -7,6 +8,7 @@ import Firebase from '../../database/firebase'
 function Profile(props) {
   const [userPosts, setUserPosts] = useState([])
   const [user, setUser] = useState(null)
+  const [following, setFollowing] = useState(false)
 
   useEffect(() => {
     const { currentUser, posts } = props
@@ -31,7 +33,7 @@ function Profile(props) {
         })
 
       Firebase.firestore()
-        .collection('feed')
+        .collection('posts')
         .where('uid', '==', `${props.route.params.uid}`)
         .orderBy('creation', 'asc')
         .get()
@@ -45,17 +47,62 @@ function Profile(props) {
           setUserPosts(posts)
         })
     }
-  }, [props.route.params.uid])
+
+    if(props.following.indexOf(props.route.params.uid)> -1){
+      setFollowing(true)
+    }else{
+      setFollowing(false)
+    }
+  }, [props.route.params.uid, props.following])
+
+  const convertDate = (date) => {
+    // whatever formatting you want to do can be done here
+    var d = date.toString()
+    return d.substr(0, 21);
+}
+
+const onFollow =()=>{
+  Firebase.firestore()
+  .collection("following")
+  .doc(Firebase.auth().currentUser.uid)
+  .collection("userFollowing")
+  .doc(props.route.params.uid)
+  .set({})
+}
+
+const onUnfollow =()=>{
+  Firebase.firestore()
+  .collection("following")
+  .doc(Firebase.auth().currentUser.uid)
+  .collection("userFollowing")
+  .doc(props.route.params.uid)
+  .delete()
+}
 
   if (user === null) {
     return <View></View>
   }
+
 
   return (
     <View style={styles.container}>
       <View style={styles.containerInfo}>
         <Text>{user.name}</Text>
         <Text>{user.email}</Text>
+
+        {props.route.params.uid !== Firebase.auth().currentUser.uid? (
+          <View>
+            {following?(
+              <Button title="Following"
+              onPress={()=>onUnfollow()}
+              />
+            ):(
+              <Button title="Follow"
+              onPress={()=>onFollow()}
+              />
+            ) }
+          </View>
+        ):null}
       </View>
 
       <View style={styles.containerGallery}>
@@ -64,6 +111,17 @@ function Profile(props) {
           data={userPosts}
           renderItem={({ item }) => (
             <View style={styles.containerImage}>
+              <View style={styles.postHeader} >
+              <Avatar
+                size={60}
+                rounded
+                title="P"
+                containerStyle={{ backgroundColor: 'coral' ,margin:10}}
+              />
+              <Text>{user.name}</Text>
+              <Text>{convertDate(item.creation.toDate())}</Text>
+              <Text>{item.content}</Text>
+              </View>
               <Image style={styles.image} source={{ uri: item.downloadURL }} />
             </View>
           )}
@@ -91,11 +149,16 @@ const styles = StyleSheet.create({
     flex: 1,
     aspectRatio: 1 / 1,
   },
+  postHeader:{
+    margin:10,
+    flexDirection:'row'
+  }
 })
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   posts: store.userState.posts,
+  following: store.userState.following,
 })
 
 export default connect(mapStateToProps, null)(Profile)
