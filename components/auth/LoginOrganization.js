@@ -1,7 +1,7 @@
 // components/login.js
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Alert, ActivityIndicator } from 'react-native';
 import Firebase from '../../database/firebase';
 
 
@@ -55,7 +55,9 @@ export default class Login extends Component {
     //   )
     // }    
     return (
-      <View style={styles.container}>  
+      <View style={styles.container}>
+        <Text style={styles.inputHeader}>Welcome back!</Text>
+
         <TextInput
           style={styles.inputStyle}
           placeholder="Email"
@@ -70,15 +72,21 @@ export default class Login extends Component {
           maxLength={15}
           secureTextEntry={true}
         />   
-        <Button
-          color="#3740FE"
-          title="Sign in"
-          onPress={() => this.userLogin()}
-        />   
+
+        <View style={styles.buttonParent}>
+          <Pressable
+            style={styles.button}
+            onPress={() => this.userLogin()}
+            android_ripple={{color: 'gray'}}
+            >
+              <Text style={styles.buttonText}>Sign in</Text>
+          </Pressable>    
+        </View> 
 
         <Text 
           style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('SignupOrganization')}>
+          onPress={() => this.props.navigation.navigate('SignupOrganization')}
+          >
           Don't have account? Click here to signup
         </Text>                          
       </View>
@@ -93,21 +101,55 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     padding: 35,
-    backgroundColor: '#dddddd'
+    backgroundColor: "#ddd"
   },
+
+  inputHeader: {
+    fontSize: 46,
+    fontWeight: 'bold',
+    marginBottom: 50,
+    color: "#000"
+  },
+
   inputStyle: {
     width: '100%',
-    marginBottom: 15,
-    paddingBottom: 15,
+    marginBottom: 25,
+    paddingVertical: 15,
+    paddingLeft: 15,
     alignSelf: "center",
     borderColor: "#ccc",
-    borderBottomWidth: 1
+    borderWidth: 1,
+    borderRadius: 20,
+    backgroundColor: "#fff"
   },
-  loginText: {
-    color: '#3740FE',
+
+  buttonParent: {
     marginTop: 25,
-    textAlign: 'center'
+    marginBottom: 15,
+    borderRadius: 15,
+    overflow: 'hidden'
   },
+
+  button: {
+    padding: 15,
+    justifyContent: "center",
+    backgroundColor: "#000",
+  },
+
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold"
+  },
+
+  loginText: {
+    color: "#000",
+    marginTop: 25,
+    textAlign: 'center',
+    textDecorationLine: 'underline'
+  },
+
   preloader: {
     left: 0,
     right: 0,
