@@ -1,16 +1,9 @@
 // components/signup.js
 
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  Alert,
-  ActivityIndicator,
-} from 'react-native'
+import { StyleSheet, Text, View, TextInput, Pressable, Alert, ActivityIndicator } from 'react-native'
 import Firebase from '../../database/firebase'
+import { RadioButton } from 'react-native-paper'
 
 export default class Signup extends Component {
   constructor() {
@@ -79,6 +72,8 @@ export default class Signup extends Component {
     }
     return (
       <View style={styles.container}>
+        <Text style={styles.inputHeader}>Sign up</Text>
+
         <TextInput
           style={styles.inputStyle}
           placeholder="Name"
@@ -100,13 +95,15 @@ export default class Signup extends Component {
           secureTextEntry={true}
         />
         
-      
-
-        <Button
-          color="#3740FE"
-          title="Sign up"
-          onPress={() => this.registerUser()}
-        />
+        <View style={styles.buttonParent}>
+          <Pressable
+            style={styles.button}
+            onPress={() => this.registerUser()}
+            android_ripple={{color: 'gray'}}
+            >
+              <Text style={styles.buttonText}>Sign up</Text>
+          </Pressable>    
+        </View>
 
         <Text
           style={styles.loginText}
@@ -128,19 +125,53 @@ const styles = StyleSheet.create({
     padding: 35,
     backgroundColor: '#dddddd'
   },
+
+  inputHeader: {
+    fontSize: 46,
+    fontWeight: 'bold',
+    marginBottom: 50,
+    color: "#000"
+  },
+
   inputStyle: {
     width: '100%',
-    marginBottom: 15,
-    paddingBottom: 15,
-    alignSelf: 'center',
-    borderColor: '#ccc',
-    borderBottomWidth: 1,
+    marginBottom: 25,
+    paddingVertical: 15,
+    paddingLeft: 15,
+    alignSelf: "center",
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 20,
+    backgroundColor: "#fff"
   },
+  
+  buttonParent: {
+    marginTop: 25,
+    marginBottom: 15,
+    borderRadius: 15,
+    overflow: 'hidden'
+  },
+
+  button: {
+    padding: 15,
+    justifyContent: "center",
+    backgroundColor: "#000",
+  },
+
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold"
+  },
+
   loginText: {
-    color: '#3740FE',
+    color: "#000",
     marginTop: 25,
     textAlign: 'center',
+    textDecorationLine: 'underline'
   },
+
   preloader: {
     left: 0,
     right: 0,
