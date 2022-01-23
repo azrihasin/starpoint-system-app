@@ -6,7 +6,7 @@ import {
   FlatList,
   Image,
   Pressable,
-  ScrollView
+  ScrollView,
 } from 'react-native'
 import { useEffect } from 'react'
 import { getAuth } from 'firebase/auth'
@@ -64,17 +64,17 @@ export default function Feed({ navigation }) {
           borderColor: 'white',
         }}
       >
-      <Pressable
-        style={styles.item}
-        onPress={() =>
-          navigation.navigate('EventDetails', { eventId: item.item.id })
-        }
-      >
+        <Pressable
+          style={styles.item}
+          onPress={() =>
+            navigation.navigate('EventDetails', { eventId: item.item.id })
+          }
+        >
           <UserComponent uid={item.item.organizationId} />
           <Text style={styles.itemTitle}>{item.item.title}</Text>
           <Text style={styles.itemDescription}>{item.item.description}</Text>
-      </Pressable>
-        </Card>
+        </Pressable>
+      </Card>
     )
   }
 
@@ -103,7 +103,7 @@ export default function Feed({ navigation }) {
       <View style={styles.appBar}>
         <Text style={styles.title}>Feed</Text>
       </View>
-     
+
       <FlatList
         data={posts}
         renderItem={Item}
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     marginTop: 36,
-    marginBottom:20
+    marginBottom: 20,
   },
   appBar: {
     justifyContent: 'space-between',

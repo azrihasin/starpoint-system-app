@@ -51,7 +51,8 @@ The sequence diagram shows the expected flow of the application for the users.
 
 ## Screenshots
 
-// For screenshots and explanations
+- Welcome Page
+<img src="screen_images/welcome.jpeg" width="300" >
 
 ## Difficulties / Challenges
 - Limited features in Firebase

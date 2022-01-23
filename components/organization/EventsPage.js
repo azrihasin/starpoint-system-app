@@ -37,7 +37,7 @@ export default EventsPage = ({ navigation }) => {
             <Pressable onPress={() => navigation.navigate("CreateEvent")} style={styles.iconButton} >
                 <MaterialCommunityIcons
                     name="plus"
-                    size={26}
+                    size={36}
                     color="white"
                 />
             </Pressable>
@@ -60,13 +60,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     iconButton: {
-        backgroundColor: 'blue',
+        marginRight:20,
+        marginTop:18,
+        height:45,
+        width:45,
+        backgroundColor: 'black',
         borderRadius: 6,
         padding: 4
     },
     title: {
-        fontSize: 20,
-        fontWeight: "600",
+        marginTop: 20,
+        marginBottom: 10,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginLeft: 20,
     },
     item: {
         marginHorizontal: 16,

@@ -48,8 +48,11 @@ const styles = StyleSheet.create({
         marginTop: 36
     },
     title: {
-        fontSize: 20,
-        fontWeight: "600",
+        marginTop: 20,
+        marginBottom: 10,
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginLeft: 20,
         paddingHorizontal: 16
     },
     item: {
