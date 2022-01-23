@@ -51,8 +51,38 @@ The sequence diagram shows the expected flow of the application for the users.
 
 ## Screenshots
 
-- Welcome Page
-<img src="screen_images/welcome.jpeg" width="300" >
+- Welcome Page (Organization/Student)
+<img src="screen_images/welcome.jpg" width="300" >
+
+- Sign In and Sign Up pages (Student)
+<img src="screen_images/sign_up_student.jpg" width="300" >
+<img src="screen_images/sign_in_student.jpg" width="300" >
+
+- Sign In and Sign Up pages (Organization)
+<img src="screen_images/sign_up_org.jpg" width="300" >
+<img src="screen_images/sign_in_org_page.jpg" width="300" >
+
+- Feed Page (Organization/Student)
+<img src="screen_images/feed_page.jpg" width="300" >
+
+- Scan Qr Page (Student)
+<img src="screen_images/scanqr_ page.jpg" width="300" >
+
+- History Page (Student)
+<img src="screen_images/history_page.jpg" width="300" >
+
+- Add Post Page (Organization)
+<img src="screen_images/add_page.jpg" width="300" >
+
+- Add Event Page (Organization)
+<img src="screen_images/event_page.jpg" width="300" >
+
+- Profile Pages (Organization/Student)
+<img src="screen_images/student_profile.jpg" width="300" >
+<img src="screen_images/org_profile.jpg" width="300" >
+
+- Search Page (Organization/Student)
+<img src="screen_images/search_page.jpg" width="300" >
 
 ## Difficulties / Challenges
 - Limited features in Firebase
