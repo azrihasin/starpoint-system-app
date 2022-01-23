@@ -1,7 +1,7 @@
 // components/welcome.js
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
 
 export default class Welcome extends Component {
   render() {
@@ -14,21 +14,25 @@ export default class Welcome extends Component {
           <Text style={styles.start}>Let's get started.</Text>
           <Text style={styles.iama}>I am a:</Text>
 
-          <TouchableOpacity
-            style={styles.button}
-            activeOpacity={0.85}
-            onPress={() => this.props.navigation.navigate('Student')}
-            >
-            <Text style={styles.buttonText}>Student</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonParent}>
+            <Pressable
+              style={styles.button}
+              onPress={() => this.props.navigation.navigate('Student')}
+              android_ripple={{color: 'gray'}}
+              >
+              <Text style={styles.buttonText}>Student</Text>
+            </Pressable>  
+          </View>
 
-          <TouchableOpacity 
-            style={styles.button}
-            activeOpacity={0.85}
-            onPress={() => this.props.navigation.navigate('Organization')}
-            >
-            <Text style={styles.buttonText}>Organization</Text>
-          </TouchableOpacity>    
+          <View style={styles.buttonParent}>
+            <Pressable
+              style={styles.button}
+              onPress={() => this.props.navigation.navigate('Organization')}
+              android_ripple={{color: 'gray'}}
+              >
+              <Text style={styles.buttonText}>Organization</Text>
+            </Pressable>  
+          </View>
         </View>
       </View>
     );
@@ -72,12 +76,16 @@ const styles = StyleSheet.create({
     color: "#fff"
   },
 
+  buttonParent: {
+    marginVertical: 15,
+    borderRadius: 15,
+    overflow: 'hidden'
+  },
+
   button: {
-    borderRadius: 10,
     padding: 15,
     justifyContent: "center",
     backgroundColor: "#000",
-    marginVertical: 10
   },
 
   buttonText: {
@@ -85,5 +93,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold"
-  }
+  },
 });
