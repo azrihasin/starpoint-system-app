@@ -49,11 +49,13 @@ The sequence diagram shows the expected flow of the application for the users.
 
 <img src="Sequence_diagram.jpeg" width="1000" >
 
+## Screenshots
+
+// For screenshots and explanations
+
 ## Difficulties / Challenges
 - Limited features in Firebase
   - Firebase is not a relational database, hence we couldn't operate join tables as we would in MySQL.
 
 - Merging codes with different dependencies
   - As we worked on different parts of the project, some require different dependencies, hence causing conflict during the merging process. This causes more time to be taken to work on the issues.
-
-
