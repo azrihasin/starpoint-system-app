@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Divider } from 'react-native-paper';
-import Firebase from '../../database/firebase'
+import Firebase from '../database/firebase'
 
 export default function Search(props) {
   const [users, setUsers] = useState([])

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
-import User from "../User";
+import User from "../../User";
 
 export default HistoryPage = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(true);

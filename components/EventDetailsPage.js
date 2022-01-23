@@ -13,7 +13,7 @@ const Item = ({ label, children }) => {
 };
 
 export default EventDetailsPage = ({ route, navigation }) => {
-    const { eventId } = route.params;
+    const { eventId, showJoinButton } = route.params;
 
     const [isLoading, setIsLoading] = useState(true);
     const [event, setEvent] = useState(null);
@@ -39,7 +39,7 @@ export default EventDetailsPage = ({ route, navigation }) => {
         if (result.exists) {
             setEvent(result.data());
             const historyRef = collection(db, "history");
-            const q = query(historyRef, where("userId", "==", User.id));
+            const q = query(historyRef, where("userId", "==", User.id), where("eventId", "==", eventId));
             const querySnapshot = await getDocs(q);
             if (!querySnapshot.empty) {
                 setJoined(true);
@@ -67,7 +67,7 @@ export default EventDetailsPage = ({ route, navigation }) => {
         <Item label="Title" >{event.title}</Item>
         <Item label="Description" >{event.description}</Item>
         <Item label="Star Points" >{event.starPoints.toString()}</Item>
-        {User.role === "student" && (joined ?
+        {(User.role === "student" && showJoinButton) && (joined ?
             <Text style={styles.item} >You joined this event already</Text>
             : <View style={{paddingHorizontal: 16}} ><Button title="Join" onPress={join} /></View>)}
     </View>;

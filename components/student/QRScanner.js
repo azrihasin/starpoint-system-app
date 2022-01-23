@@ -17,7 +17,7 @@ export default function QRScanner({ navigation }) {
   const handleQRCodeScanned = ({ type, data }) => {
     console.log(data);
     //setScanned(true);
-    navigation.navigate("EventDetails", { eventId: data });
+    navigation.navigate("EventDetails", { eventId: data, showJoinButton: true });
   };
 
   if (hasPermission === null) {

@@ -10,23 +10,23 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
-
-
-
 import Firebase from './database/firebase'
-import Welcome from './components/Welcome'
+
 import LoginOrganization from './components/auth/LoginOrganization'
 import LoginStudent from './components/auth/LoginStudent'
 import SignupOrganization from './components/auth/SignupOrganization'
 import SignupStudent from './components/auth/SignupStudent'
-import Main from './components/Main'
-import AddScreen from './components/organization/Add'
-import ProfileScreen from './components/organization/Profile'
-import UploadScreen from './components/organization/Upload'
-import EventDetailsPage from './components/EventDetailsPage'
-import CreateEventPage from './components/CreateEventPage'
 
-import { Text, View, LogBox, } from 'react-native'
+import Welcome from './components/Welcome'
+import Main from './components/Main'
+import ProfileScreen from './components/Profile'
+import EventDetailsPage from './components/EventDetailsPage'
+
+import CreateEventPage from './components/organization/CreateEventPage'
+import AddScreen from './components/organization/Add'
+import UploadScreen from './components/organization/Upload'
+
+import { Text, LogBox, } from 'react-native'
 
 const Stack = createStackNavigator()
 

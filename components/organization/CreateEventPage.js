@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Button, StyleSheet } from "react-native";
-import TextField from "./TextField";
+import TextField from "../TextField";
 import { useState } from "react";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";

@@ -5,19 +5,20 @@ import { bindActionCreators } from 'redux'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Firebase from '../database/firebase'
-import FeedScreen from './organization/Feed'
-import ProfileScreen from './organization/Profile'
-import SearchScreen from './organization/Search'
-import QRScanner from './QRScanner'
-import EventsPage from './EventsPage'
-import HistoryPage from './HistoryPage'
+
+import FeedScreen from './Feed'
+import ProfileScreen from './Profile'
+import SearchScreen from './Search'
+import QRScanner from './student/QRScanner'
+import EventsPage from './organization/EventsPage'
+import HistoryPage from './student/HistoryPage'
 import User from '../User'
 
 import {
   fetchUser,
   fetchUserPosts,
   fetchUserFollowing,
-  clearData
+  clearData,
 } from '../redux/actions/index'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -36,13 +37,12 @@ export class Main extends Component {
   }
 
   componentDidMount() {
-    this.props.clearData();
-    this.props.fetchUser();
-    this.props.fetchUserPosts();
-    this.props.fetchUserFollowing();
+    this.props.clearData()
+    this.props.fetchUser()
+    this.props.fetchUserPosts()
+    this.props.fetchUserFollowing()
 
     User.fetchDetails().then((_) => {
-    
       this.setState({
         loaded: true,
         role: User.role,
@@ -108,28 +108,30 @@ export class Main extends Component {
             }}
           />
 
-          <Tab.Screen
-            key={Date.now()}
-            name="AddTab"
-            component={EmptyScreen}
-            listeners={({ navigation }) => ({
-              tabPress: (event) => {
-                event.preventDefault()
-                navigation.navigate('Add')
-              },
-            })}
-            options={{
-              tabBarLabel: 'Add',
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons
-                  name="plus-box"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          />
-          
+          {role === 'organization' && (
+            <Tab.Screen
+              key={Date.now()}
+              name="AddTab"
+              component={EmptyScreen}
+              listeners={({ navigation }) => ({
+                tabPress: (event) => {
+                  event.preventDefault()
+                  navigation.navigate('Add')
+                },
+              })}
+              options={{
+                tabBarLabel: 'Add',
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="plus-box"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          )}
+
           {role === 'organization' && (
             <Tab.Screen
               key={Date.now()}
