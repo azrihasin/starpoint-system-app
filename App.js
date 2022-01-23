@@ -109,7 +109,7 @@ export class App extends Component {
               name="EventDetails"
               component={EventDetailsPage}
               navigation={this.props.navigation}
-              options={{ headerShown: false }}
+              options={{ headerShown: true }}
             />
             <Stack.Screen
               name="CreateEvent"
