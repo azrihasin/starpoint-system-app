@@ -10,25 +10,29 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
+
 
 import Firebase from './database/firebase'
 import Welcome from './components/Welcome'
-import Login from './components/auth/Login'
-import Signup from './components/auth/Signup'
-import MainScreen from './components/Organization'
+import LoginOrganization from './components/auth/LoginOrganization'
+import LoginStudent from './components/auth/LoginStudent'
+import SignupOrganization from './components/auth/SignupOrganization'
+import SignupStudent from './components/auth/SignupStudent'
+import Main from './components/Main'
 import AddScreen from './components/organization/Add'
-import SaveScreen from './components/organization/Save'
+import ProfileScreen from './components/organization/Profile'
+import UploadScreen from './components/organization/Upload'
+import EventDetailsPage from './components/EventDetailsPage'
+import CreateEventPage from './components/CreateEventPage'
 
-import { Text, View, LogBox } from 'react-native'
+import { Text, View, LogBox, } from 'react-native'
 
 const Stack = createStackNavigator()
 
-const Tab = createMaterialTopTabNavigator()
-
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
-LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+LogBox.ignoreAllLogs()
 
 export class App extends Component {
   constructor(props) {
@@ -40,6 +44,7 @@ export class App extends Component {
 
   componentDidMount() {
     Firebase.auth().onAuthStateChanged((user) => {
+    
       if (!user) {
         this.setState({
           loggedIn: false,
@@ -96,19 +101,37 @@ export class App extends Component {
           <Stack.Navigator initialRouteName="Main">
             <Stack.Screen
               name="Main"
-              component={MainScreen}
+              component={Main}
               navigation={this.props.navigation}
               options={{ headerShown: false }}
             />
             <Stack.Screen
+              name="EventDetails"
+              component={EventDetailsPage}
+              navigation={this.props.navigation}
+              options={{ headerShown: true }}
+            />
+            <Stack.Screen
+              name="CreateEvent"
+              component={CreateEventPage}
+              navigation={this.props.navigation}
+              options={{ headerShown: false }}
+            />
+               <Stack.Screen
               name="Add"
               component={AddScreen}
               navigation={this.props.navigation}
               // options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Save"
-              component={SaveScreen}
+              name="Upload"
+              component={UploadScreen}
+              navigation={this.props.navigation}
+              // options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
               navigation={this.props.navigation}
               // options={{ headerShown: false }}
             />
@@ -123,17 +146,17 @@ export default App
 
 const Student = (props) => {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="LoginStudent">
       <Stack.Screen
-        name="Signup"
-        component={Signup}
+        name="SignupStudent"
+        component={SignupStudent}
         navigation={props.navigation}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Login"
+        name="LoginStudent"
         navigation={props.navigation}
-        component={Login}
+        component={LoginStudent}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -142,17 +165,17 @@ const Student = (props) => {
 
 const Organization = (props) => {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="LoginOrganization">
       <Stack.Screen
-        name="Signup"
-        component={Signup}
+        name="SignupOrganization"
+        component={SignupOrganization}
         navigation={props.navigation}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Login"
+        name="LoginOrganization"
         navigation={props.navigation}
-        component={Login}
+        component={LoginOrganization}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

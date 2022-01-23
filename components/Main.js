@@ -4,31 +4,68 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
-import CameraScreen from './organization/Camera'
+import Firebase from '../database/firebase'
 import FeedScreen from './organization/Feed'
 import ProfileScreen from './organization/Profile'
 import SearchScreen from './organization/Search'
+import QRScanner from './QRScanner'
+import EventsPage from './EventsPage'
+import HistoryPage from './HistoryPage'
+import User from '../User'
 
-import { fetchUser, fetchUserPosts } from '../redux/actions/index'
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchUserFollowing,
+  clearData
+} from '../redux/actions/index'
 
 const Tab = createMaterialBottomTabNavigator()
 
 const EmptyScreen = () => {
-  return <View></View>
+  return null
 }
 
 export class Main extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loaded: false,
+      role: '',
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchUser()
-    this.props.fetchUserPosts()
+    this.props.clearData();
+    this.props.fetchUser();
+    this.props.fetchUserPosts();
+    this.props.fetchUserFollowing();
+
+    User.fetchDetails().then((_) => {
+    
+      this.setState({
+        loaded: true,
+        role: User.role,
+      })
+    })
   }
 
   render() {
+    const { loaded, role } = this.state
     const { currentUser } = this.props
 
     if (currentUser == undefined) {
       return <View></View>
+    }
+
+    if (!loaded) {
+      return (
+        <View
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text>Loading...</Text>
+        </View>
+      )
     }
 
     return (
@@ -60,7 +97,7 @@ export class Main extends Component {
             name="Search"
             component={SearchScreen}
             options={{
-              tabBarLabel: 'Seach',
+              tabBarLabel: 'Search',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
                   name="magnify"
@@ -71,7 +108,6 @@ export class Main extends Component {
             }}
           />
 
-          {/* NEED TO ADD EMPTY COMPONENT BECAUSE COMPONENT MUST BE PASSED EVENTHOUG WE DIDNT USE IT */}
           <Tab.Screen
             key={Date.now()}
             name="AddTab"
@@ -93,10 +129,67 @@ export class Main extends Component {
               ),
             }}
           />
-
+          
+          {role === 'organization' && (
+            <Tab.Screen
+              key={Date.now()}
+              name="Events"
+              component={EventsPage}
+              options={{
+                tabBarLabel: 'Event',
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="view-list"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          )}
+          {role === 'student' && (
+            <Tab.Screen
+              key={Date.now()}
+              name="Scan"
+              component={QRScanner}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="qrcode"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          )}
+          {role === 'student' && (
+            <Tab.Screen
+              key={Date.now()}
+              name="History"
+              component={HistoryPage}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="history"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          )}
           <Tab.Screen
             name="Profile"
             component={ProfileScreen}
+            listeners={({ navigation }) => ({
+              tabPress: (event) => {
+                event.preventDefault()
+                navigation.navigate('Profile', {
+                  uid: Firebase.auth().currentUser.uid,
+                })
+              },
+            })}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
@@ -118,6 +211,9 @@ const mapStateToProps = (store) => ({
 })
 
 const mapDispatchProps = (dispatch) =>
-  bindActionCreators({ fetchUser, fetchUserPosts  }, dispatch)
+  bindActionCreators(
+    { fetchUser, fetchUserPosts, fetchUserFollowing, clearData },
+    dispatch,
+  )
 
 export default connect(mapStateToProps, mapDispatchProps)(Main)

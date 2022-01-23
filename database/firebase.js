@@ -4,18 +4,25 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/storage'
 
 // Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBmhbpE-xtLGXGLE1oAeqiosD47BAPmS84",
+  authDomain: "react-native-61e86.firebaseapp.com",
+  projectId: "react-native-61e86",
+  storageBucket: "react-native-61e86.appspot.com",
+  messagingSenderId: "790690115203",
+  appId: "1:790690115203:web:d9faf6bb5558ed1ac035b6"
+};
 
 //REPLACE THIS FIREBASE CONFIG WITH YOUR FIREBASE CONFIG
 
 // const firebaseConfig = {
-//   apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-//   authDomain: "xxxxxxxxxx.firebaseapp.com",
-//   databaseURL: "https://xxxxxxxxxxxxx.firebaseio.com",
-//   projectId: "xxxxxxxx",
-//   storageBucket: "xxxxxxxxx.appspot.com",
-//   messagingSenderId: "xxxxxxxxx",
-//   appId: "1:xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-//   };
+//   apiKey: "AIzaSyBmhbpE-xtLGXGLE1oAeqiosD47BAPmS84",
+//   authDomain: "react-native-61e86.firebaseapp.com",
+//   projectId: "react-native-61e86",
+//   storageBucket: "react-native-61e86.appspot.com",
+//   messagingSenderId: "790690115203",
+//   appId: "1:790690115203:web:fbac5158940e8ac5c035b6"
+// };
 
 let Firebase;
 
