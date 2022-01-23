@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, getDocs, query, where, addDoc, collection } from "firebase/firestore";
 import QRCode from "react-native-qrcode-svg";
 import User from "../User";
+import UserComponent from "./UserComponent";
 
 const Item = ({ label, children }) => {
     return <View style={styles.item} >
@@ -59,6 +60,7 @@ export default EventDetailsPage = ({ route, navigation }) => {
     }
 
     return <View style={styles.body} >
+        <UserComponent uid={event.organizationId} />
         {User.role === "organization" && <View style={{ justifyContent: 'center', alignItems: "center" }} >
             <QRCode size={256} value={event.id} />
         </View>}
@@ -67,13 +69,13 @@ export default EventDetailsPage = ({ route, navigation }) => {
         <Item label="Star Points" >{event.starPoints.toString()}</Item>
         {User.role === "student" && (joined ?
             <Text style={styles.item} >You joined this event already</Text>
-            : <Pressable style={styles.joinButton} onPress={join} ><Text>Join</Text></Pressable>)}
+            : <View style={{paddingHorizontal: 16}} ><Button title="Join" onPress={join} /></View>)}
     </View>;
 };
 
 const styles = StyleSheet.create({
     body: {
-        marginTop: 56
+        marginTop: 16
     },
     title: {
         fontSize: 20,

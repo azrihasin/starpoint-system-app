@@ -33,11 +33,13 @@ export default HistoryPage = ({ navigation }) => {
 
     return <View style={styles.body} >
         <Text style={styles.title} >History</Text>
-        <FlatList
+        {events.length > 0 ? <FlatList
             data={events}
             renderItem={Item}
             keyExtractor={item => item.id}
-        />
+        /> : <View style={{ height: 500, alignItems: "center", justifyContent: 'center' }} >
+            <Text>No history found</Text>
+        </View>}
     </View>;
 };
 

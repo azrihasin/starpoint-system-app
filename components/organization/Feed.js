@@ -1,97 +1,84 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, Image, FlatList, Button } from 'react-native'
-import { Avatar } from 'react-native-elements'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, FlatList, Image, Pressable } from 'react-native'
+import { useEffect } from 'react';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, query, where, getDocs, limit, getDoc, doc, orderBy } from "firebase/firestore";
+import Firebase from '../../database/firebase';
+import UserComponent from '../UserComponent';
 
-import { connect } from 'react-redux'
-import Firebase from '../../database/firebase'
+export default function Feed({ navigation }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
 
-function Feed(props) {
-  const [posts, setPosts] = useState([])
-
-  useEffect(() => {
-    let posts = []
-    if (props.usersLoaded == props.following.length) {
-      for (let i = 0; i < props.following.length; i++) {
-        const user = props.users.find((el) => el.uid === props.following[i])
-        
-        if (user != undefined) {
-          posts = [...posts, user.posts]
-          console.log(user.posts)
-        }
-      }
-
-      posts.sort(function (x, y) {
-        return x.creation - y.creation
-      })
-
-     
-
-      setPosts(posts)
+  const Item = (item) => {
+    if (item.item.downloadURL) {
+      return <View style={styles.item} >
+        <UserComponent uid={item.item.uid} />
+        <Image
+          style={{ height: 300 }}
+          source={{ uri: item.item.downloadURL }}
+        />
+        <Text style={styles.itemTitle} >{item.item.title}</Text>
+        <Text style={styles.itemDescription} >{item.item.content}</Text>
+      </View>;
     }
-  }, [props.usersLoaded])
+    return <Pressable style={styles.item} onPress={() => navigation.navigate("EventDetails", { eventId: item.item.id })} >
+      <UserComponent uid={item.item.organizationId} />
+      <Text style={styles.itemTitle}>{item.item.title}</Text>
+      <Text style={styles.itemDescription}>{item.item.description}</Text>
+    </Pressable>
+  };
 
-  const convertDate = (date) => {
-    // whatever formatting you want to do can be done here
-    var d = date.toString()
-    return d.substr(0, 21)
-  }
+  useEffect(async () => {
+    const db = getFirestore();
+    const postsSnapshot = await getDocs(query(collection(db, "posts"), orderBy('creation'), limit(5)));
+    const eventsSnapshot = await getDocs(query(collection(db, "events")));
+    setPosts([
+      ...postsSnapshot.docs.map((e) => ({ id: e.id, ...e.data() })),
+      ...eventsSnapshot.docs.map((e) => ({ id: e.id, ...e.data() }))
+    ]);
+    setIsLoading(false);
+  }, []);
 
-  return (
-    <View style={styles.containerGallery}>
-      {/* <FlatList
-        horizontal={false}
-        data={posts}
-        renderItem={({ item }) => (
-          <View style={styles.containerImage}>
-            <View style={styles.postHeader}>
-              <Avatar
-                size={60}
-                rounded
-                title="P"
-                containerStyle={{ backgroundColor: 'coral', margin: 10 }}
-              />
-               <Text>{item.user.name}</Text> 
-              <Text>{convertDate(item.creation.toDate())}</Text>
-              <Text>{item.content}</Text>
-            </View>
-            <Image style={styles.image} source={{ uri: item.downloadURL }} />
-          </View>
-        )}
-      /> */}
+  if (isLoading) return <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }} ><Text>Loading...</Text></View>;
+
+  return <View style={styles.body} >
+    <View style={styles.appBar} >
+      <Text style={styles.title} >Feed</Text>
     </View>
-  )
+    <FlatList
+      data={posts}
+      renderItem={Item}
+      keyExtractor={item => item.id}
+    />
+  </View>;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 40,
+  body: {
+    marginTop: 36
   },
-  containerInfo: {
-    margin: 20,
-  },
-  containerGallery: {
-    flex: 1,
-  },
-  containerImage: {
-    flex: 1 / 3,
-  },
-  image: {
-    flex: 1,
-    aspectRatio: 1 / 1,
-  },
-  postHeader: {
-    margin: 10,
+  appBar: {
+    justifyContent: 'space-between',
     flexDirection: 'row',
+    paddingHorizontal: 16
   },
-})
-
-const mapStateToProps = (store) => ({
-  currentUser: store.userState.currentUser,
-  posts: store.userState.posts,
-  following: store.userState.following,
-  users: store.usersState.users,
-  usersLoaded: store.usersState.usersLoaded,
-})
-
-export default connect(mapStateToProps, null)(Feed)
+  title: {
+    fontSize: 20,
+    fontWeight: "600",
+  },
+  item: {
+    paddingVertical: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#c4c4c4"
+  },
+  itemTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    paddingHorizontal: 12,
+    paddingTop: 4
+  },
+  itemDescription: {
+    paddingHorizontal: 12,
+  },
+});
