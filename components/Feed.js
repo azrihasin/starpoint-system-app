@@ -78,10 +78,10 @@ export default function Feed({ navigation }) {
     )
   }
 
-  useEffect(async () => {
+  async function fetchFeed() {
     const db = getFirestore()
     const postsSnapshot = await getDocs(
-      query(collection(db, 'posts'), orderBy('creation'), limit(5)),
+      query(collection(db, 'posts'), orderBy('creation'), limit(15)),
     )
     const eventsSnapshot = await getDocs(query(collection(db, 'events')))
     setPosts([
@@ -89,6 +89,13 @@ export default function Feed({ navigation }) {
       ...eventsSnapshot.docs.map((e) => ({ id: e.id, ...e.data() })),
     ])
     setIsLoading(false)
+  }
+
+  useEffect(async () => {
+    navigation.addListener('focus', async () => {
+      fetchFeed();
+    });
+    fetchFeed();
   }, [])
 
   if (isLoading)

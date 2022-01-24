@@ -39,7 +39,7 @@ export default CreateEventPage = ({ navigation }) => {
         starPoints: starPoints,
         organizationId: getAuth().currentUser.uid,
       })
-      navigation.navigate('EventDetails', { eventId: docRef.id })
+      navigation.replace('EventDetails', { eventId: docRef.id })
     }
   }
 

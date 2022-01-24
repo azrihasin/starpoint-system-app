@@ -174,10 +174,9 @@ const styles = StyleSheet.create({
   },
   postButton: {
     paddingVertical: 12,
-    paddingHorizontal: 23,
+    paddingHorizontal: 24,
     borderRadius: 4,
     elevation: 3,
-    width: 90,
     margin: 15,
     backgroundColor: '#000',
   },
@@ -190,7 +189,6 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: 25,
-    height: 30,
     fontSize: 30,
     fontWeight: 'bold',
   },

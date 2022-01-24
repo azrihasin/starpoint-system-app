@@ -19,7 +19,7 @@ export default EventsPage = ({ navigation }) => {
         </Pressable>
     };
 
-    useEffect(async () => {
+    async function fetchEvents(){
         const db = getFirestore();
         const eventsRef = collection(db, "events");
         const q = query(eventsRef, where("organizationId", "==", getAuth().currentUser.uid));
@@ -27,6 +27,12 @@ export default EventsPage = ({ navigation }) => {
         setEvents(querySnapshot.docs.map((e) => ({ id: e.id, ...e.data() })));
         setIsLoading(false);
         console.log(events);
+    }
+
+    useEffect(async () => {
+        navigation.addListener('focus', ()=>{
+            fetchEvents();
+        });
     }, []);
 
     if (isLoading) return <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }} ><Text>Loading...</Text></View>;
