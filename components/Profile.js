@@ -119,8 +119,6 @@ function Profile(props) {
     return <View></View>
   }
 
-  // email maybe change with matric no as in proposal?
-  // image example, change with user image
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -192,7 +190,11 @@ function Profile(props) {
         </View>
 
         <View style={styles.eventGallery}>
-          <Text style={styles.eventHeader}>Your Activity</Text>
+          {props.route.params.uid === Firebase.auth().currentUser.uid ?
+            <Text style={styles.eventHeader}>Your Activity</Text>
+            :
+            <Text style={styles.eventHeader}>Activity</Text>
+          }
 
           {userPosts.map((item) => {
             return (

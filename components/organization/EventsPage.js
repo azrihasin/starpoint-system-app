@@ -39,7 +39,7 @@ export default EventsPage = ({ navigation }) => {
 
     return <View style={styles.body} >
         <View style={styles.appBar} >
-            <Text style={styles.title} >Events</Text>
+            <Text style={styles.title}>Events</Text>
             <Pressable onPress={() => navigation.navigate("CreateEvent")} style={styles.iconButton} >
                 <MaterialCommunityIcons
                     name="plus"
@@ -82,11 +82,12 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     item: {
-        marginHorizontal: 16,
+        marginHorizontal: 20,
         flexDirection: 'row',
         paddingVertical: 12,
         alignItems: 'center',
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
+        borderColor: 'rgba(0, 0, 0, 0.3)'
     },
     itemTitle: {
         color: 'black',

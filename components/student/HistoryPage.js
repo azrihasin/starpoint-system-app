@@ -38,7 +38,7 @@ export default HistoryPage = ({ navigation }) => {
     if (isLoading) return <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }} ><Text>Loading...</Text></View>;
 
     return <View style={styles.body} >
-        <Text style={styles.title} >History</Text>
+        <Text style={styles.title}>History</Text>
         {events.length > 0 ? <FlatList
             data={events}
             renderItem={Item}
@@ -58,12 +58,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 30,
         fontWeight: 'bold',
-        marginLeft: 20,
-        paddingHorizontal: 16
+        marginLeft: 20
     },
+
     item: {
-        marginHorizontal: 16,
+        marginHorizontal: 20,
         paddingVertical: 12,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
+        borderColor: 'rgba(0, 0, 0, .3)'
     },
 });
