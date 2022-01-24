@@ -20,13 +20,19 @@ export default HistoryPage = ({ navigation }) => {
         </Pressable>
     };
 
-    useEffect(async () => {
+    async function fetchHistory() {
         const db = getFirestore();
         const historyRef = collection(db, "history");
         const q = query(historyRef, where("userId", "==", User.id));
         const querySnapshot = await getDocs(q);
         setEvents(querySnapshot.docs.map((e) => ({ id: e.id, ...e.data() })));
         setIsLoading(false);
+    }
+
+    useEffect(async () => {
+        navigation.addListener('focus', async () => {
+            fetchHistory();
+        });
     }, []);
 
     if (isLoading) return <View style={{ flex: 1, alignItems: "center", justifyContent: 'center' }} ><Text>Loading...</Text></View>;

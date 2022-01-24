@@ -81,7 +81,7 @@ export default function Feed({ navigation }) {
   async function fetchFeed() {
     const db = getFirestore()
     const postsSnapshot = await getDocs(
-      query(collection(db, 'posts'), orderBy('creation'), limit(15)),
+      query(collection(db, 'posts'), orderBy('creation', 'desc'), limit(15)),
     )
     const eventsSnapshot = await getDocs(query(collection(db, 'events')))
     setPosts([

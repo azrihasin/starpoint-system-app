@@ -20,6 +20,28 @@ function Profile(props) {
   const [attendedEvents, setAttendedEvents] = useState([])
   const [starPoints, setStarPoints] = useState(0)
 
+  async function fetchAttendedEvents() {
+    Firebase.firestore()
+      .collection('history')
+      .where('userId', '==', `${props.route.params.uid}`)
+      .get()
+      .then((snapshot) => {
+        const result = snapshot.docs.map((e) => e.data())
+        setAttendedEvents(result)
+        let total = 0
+        for (let i = 0; i < result.length; i++) {
+          total += parseInt(result[i].starPoints)
+        }
+        setStarPoints(total)
+      });
+  }
+
+  useEffect(() => {
+    props.navigation.addListener('focus', async () => {
+      fetchAttendedEvents();
+    });
+  }, []);
+
   useEffect(() => {
     const { currentUser, posts } = props
     console.log({ currentUser, posts })
@@ -27,19 +49,6 @@ function Profile(props) {
     if (props.route.params.uid === Firebase.auth().currentUser.uid) {
       setUser(currentUser)
       setUserPosts(posts)
-      Firebase.firestore()
-        .collection('history')
-        .where('userId', '==', `${props.route.params.uid}`)
-        .get()
-        .then((snapshot) => {
-          const result = snapshot.docs.map((e) => e.data())
-          setAttendedEvents(result)
-          let total = 0
-          for (let i = 0; i < result.length; i++) {
-            total += result[i].starPoints
-          }
-          setStarPoints(total)
-        })
     } else {
       //COMING FROM SEARCH COMPONENT WHERE WE NEED TO REPLACE THE PROFILE WITH SEARCHED ID
       Firebase.firestore()

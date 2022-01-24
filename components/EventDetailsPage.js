@@ -32,18 +32,21 @@ export default EventDetailsPage = ({ route, navigation }) => {
     };
 
     useEffect(async () => {
-        const db = getFirestore();
-        const ref = doc(db, "events", eventId);
-        const result = await getDoc(ref);
-        
-        if (result.exists) {
-            setEvent(result.data());
-            const historyRef = collection(db, "history");
-            const q = query(historyRef, where("userId", "==", User.id), where("eventId", "==", eventId));
-            const querySnapshot = await getDocs(q);
-            if (!querySnapshot.empty) {
-                setJoined(true);
+        try {
+            const db = getFirestore();
+            const ref = doc(db, "events", eventId);
+            const result = await getDoc(ref);
+            if (result.exists) {
+                setEvent(result.data());
+                const historyRef = collection(db, "history");
+                const q = query(historyRef, where("userId", "==", User.id), where("eventId", "==", eventId));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    setJoined(true);
+                }
             }
+        } catch (error) {
+            setEvent(null);
         }
         setIsLoading(false);
     }, []);
@@ -53,8 +56,8 @@ export default EventDetailsPage = ({ route, navigation }) => {
     </View>;
 
     if (!event) {
-        return <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}} >
-            <Text style={{paddingBottom: 16, fontSize: 18}} >No event found</Text>
+        return <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }} >
+            <Text style={{ paddingBottom: 16, fontSize: 18 }} >No event found</Text>
             <Button title="Go back" onPress={() => navigation.goBack()} />
         </View>
     }
@@ -69,7 +72,7 @@ export default EventDetailsPage = ({ route, navigation }) => {
         <Item label="Star Points" >{event.starPoints.toString()}</Item>
         {(User.role === "student" && showJoinButton) && (joined ?
             <Text style={styles.item} >You joined this event already</Text>
-            : <View style={{paddingHorizontal: 16}} ><Button title="Join" onPress={join} /></View>)}
+            : <View style={{ paddingHorizontal: 16 }} ><Button title="Join" onPress={join} /></View>)}
     </View>;
 };
 
